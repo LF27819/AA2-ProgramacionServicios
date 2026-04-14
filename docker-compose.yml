@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: discord-postgres
+    environment:
+      POSTGRES_USER: discord_user
+      POSTGRES_PASSWORD: discord_password
+      POSTGRES_DB: discord_db
+    ports:
+      - "5432:5432"
