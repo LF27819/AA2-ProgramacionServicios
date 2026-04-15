@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { MensajesService } from './mensajes.service';
+import { CrearMensajeDto } from './dto/crear-mensaje.dto';
 
 @Controller('mensajes')
 export class MensajesController {
@@ -11,7 +12,7 @@ export class MensajesController {
     }
 
     @Post()
-    crearMensaje(@Body() datos: any) {
+    crearMensaje(@Body() datos: CrearMensajeDto) {
         return this.mensajesService.crearMensaje(datos);
     }
 }

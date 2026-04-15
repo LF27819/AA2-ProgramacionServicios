@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { Usuario } from './entities/usuario.entity';
+import { CrearUsuarioDto } from './dto/crear-usuario.dto';
+import { ActualizarUsuarioDto } from './dto/actualizar-usuario.dto';
 
 
 @Controller('usuarios')
@@ -20,15 +22,15 @@ export class UsuariosController {
     }
 
     @Post()
-    async crearUsuario(@Body() datosUsuario: Partial<Usuario>): Promise<Usuario> {
+    async crearUsuario(@Body() datosUsuario: CrearUsuarioDto) {
         return this.usuariosService.crearUsuario(datosUsuario);
     }
 
     @Put(':id')
     async actualizarUsuario(
         @Param('id', ParseIntPipe) id: number,
-        @Body() datosUsuario: Partial<Usuario>,
-    ): Promise<Usuario> {
+        @Body() datosUsuario: ActualizarUsuarioDto,
+    ) {
         return this.usuariosService.actualizarUsuario(id, datosUsuario);
     }
 

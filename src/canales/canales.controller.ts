@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CanalesService } from './canales.service';
+import { CrearCanalDto } from './dto/crear-canal.dto';
+import { ActualizarCanalDto } from './dto/actualizar-canal.dto';
 
 @Controller('canales')
 export class CanalesController {
@@ -16,14 +18,14 @@ export class CanalesController {
     }
 
     @Post()
-    crearCanal(@Body() datos: any) {
+    crearCanal(@Body() datos: CrearCanalDto) {
         return this.canalesService.crearCanal(datos);
     }
 
     @Put(':id')
     actualizarCanal(
         @Param('id', ParseIntPipe) id: number,
-        @Body() datos: any,
+        @Body() datos: ActualizarCanalDto,
     ) {
         return this.canalesService.actualizarCanal(id, datos);
     }

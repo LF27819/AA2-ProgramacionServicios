@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Put, UseGuards, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ServidoresService } from './servidores.service';
 import { JwtAuthGuard } from '../autenticacion/jwt-auth.guard';
+import { CrearServidorDto } from './dto/crear-servidor.dto';
+import { ActualizarServidorDto } from './dto/actualizar-servidor.dto';
 
 @Controller('servidores')
 export class ServidoresController {
@@ -18,14 +20,14 @@ export class ServidoresController {
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    crearServidor(@Body() datos: any) {
+    crearServidor(@Body() datos: CrearServidorDto) {
         return this.servidoresService.crearServidor(datos);
     }
 
     @Put(':id')
     actualizarServidor(
         @Param('id', ParseIntPipe) id: number,
-        @Body() datos: any,
+        @Body() datos: ActualizarServidorDto,
     ) {
         return this.servidoresService.actualizarServidor(id, datos);
     }
