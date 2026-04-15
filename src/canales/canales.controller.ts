@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards, Req } from '@nestjs/common';
 import { CanalesService } from './canales.service';
 import { CrearCanalDto } from './dto/crear-canal.dto';
 import { ActualizarCanalDto } from './dto/actualizar-canal.dto';
@@ -50,7 +50,10 @@ export class CanalesController {
     @ApiResponse({ status: 200, description: 'Canal eliminado correctamente' })
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
-    eliminarCanal(@Param('id', ParseIntPipe) id: number) {
-        return this.canalesService.eliminarCanal(id);
+    eliminarCanal(
+        @Param('id', ParseIntPipe) id: number,
+        @Req() req: any,
+    ) {
+        return this.canalesService.eliminarCanal(id, req.user.id);
     }
 }
