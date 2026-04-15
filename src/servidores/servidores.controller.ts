@@ -24,6 +24,7 @@ export class ServidoresController {
         return this.servidoresService.crearServidor(datos);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put(':id')
     actualizarServidor(
         @Param('id', ParseIntPipe) id: number,
@@ -32,6 +33,7 @@ export class ServidoresController {
         return this.servidoresService.actualizarServidor(id, datos);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     eliminarServidor(@Param('id', ParseIntPipe) id: number) {
         return this.servidoresService.eliminarServidor(id);
