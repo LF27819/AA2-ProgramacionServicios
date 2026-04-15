@@ -1,98 +1,194 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🧩 Discord Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST desarrollada con NestJS que simula el funcionamiento básico de una aplicación tipo Discord, permitiendo la gestión de usuarios, servidores, canales y mensajes.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Tecnologías utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* **Node.js**
+* **NestJS**
+* **TypeORM**
+* **PostgreSQL**
+* **JWT (Autenticación)**
+* **Docker & Docker Compose**
+* **Swagger (Documentación)**
+* **Class-validator (Validación de datos)**
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 📦 Funcionalidades principales
+
+* Gestión completa de:
+
+  * Usuarios
+  * Servidores
+  * Canales
+  * Mensajes
+
+* Sistema de autenticación:
+
+  * Registro de usuarios
+  * Login con JWT
+  * Protección de rutas mediante Guards
+
+* Validación de datos en las peticiones
+
+* Relaciones entre entidades:
+
+  * Un servidor tiene un owner
+  * Un servidor tiene varios canales
+  * Un canal tiene varios mensajes
+
+---
+
+## 🔐 Control de permisos
+
+Se ha implementado un sistema básico de roles:
+
+* Solo el **owner del servidor** puede eliminar los canales asociados a ese servidor
+* Si otro usuario intenta hacerlo → **403 Forbidden**
+
+---
+
+## 📊 Logs y monitorización
+
+Se ha implementado un middleware global que registra:
+
+* Método HTTP
+* Ruta
+* Código de estado
+* Tiempo de respuesta
+
+Ejemplo:
+
+```
+[POST] /servidores - 201 - 34ms
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 📚 Documentación (Swagger)
 
-# watch mode
-$ npm run start:dev
+La API cuenta con documentación interactiva disponible en:
 
-# production mode
-$ npm run start:prod
+```
+http://localhost:3000/api/docs
 ```
 
-## Run tests
+Desde Swagger se pueden:
 
-```bash
-# unit tests
-$ npm run test
+* Ver todos los endpoints
+* Probar peticiones
+* Introducir token JWT para rutas protegidas
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
-$ npm run test:cov
+## ⚙️ Ejecución en local
+
+### 1. Instalar dependencias
+
+```
+npm install
 ```
 
-## Deployment
+### 2. Levantar base de datos
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+docker compose up db -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Ejecutar la aplicación
 
-## Resources
+```
+npm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 🐳 Ejecución con Docker
 
-## Support
+### Levantar todo el sistema
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+docker compose up --build
+```
 
-## Stay in touch
+Esto iniciará:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+* Backend (NestJS)
+* Base de datos PostgreSQL
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🔑 Autenticación
+
+### Registro
+
+```
+POST /autenticacion/registro
+```
+
+### Login
+
+```
+POST /autenticacion/login
+```
+
+Devuelve un `access_token` que debe usarse en:
+
+```
+Authorization: Bearer TOKEN
+```
+
+---
+
+## 📌 Endpoints principales
+
+### Usuarios
+
+* `GET /usuarios`
+* `GET /usuarios/:id`
+* `POST /usuarios`
+* `PUT /usuarios/:id`
+* `DELETE /usuarios/:id`
+
+### Servidores
+
+* `GET /servidores`
+* `POST /servidores`
+* `PUT /servidores/:id`
+* `DELETE /servidores/:id`
+
+### Canales
+
+* `GET /canales`
+* `POST /canales`
+* `PUT /canales/:id`
+* `DELETE /canales/:id`
+
+### Mensajes
+
+* `GET /mensajes`
+* `POST /mensajes`
+
+---
+
+## 🧪 Pruebas
+
+Se pueden realizar pruebas mediante:
+
+* Swagger (`/api/docs`)
+* Postman
+
+---
+
+## 🏁 Estado del proyecto
+
+✔ API funcional
+✔ Autenticación con JWT
+✔ Validación de datos
+✔ Docker funcionando
+✔ Swagger documentado
+✔ Logs implementados
+✔ Control de permisos básico
