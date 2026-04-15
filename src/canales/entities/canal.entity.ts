@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Servidor } from '../../servidores/entities/servidor.entity';
+import { Mensaje } from '../../mensajes/entities/mensaje.entity';
 
 @Entity('canales')
 export class Canal {
@@ -16,4 +17,7 @@ export class Canal {
         onDelete: 'CASCADE',
     })
     servidor!: Servidor;
+
+    @OneToMany(() => Mensaje, (mensaje) => mensaje.canal)
+    mensajes!: Mensaje[];
 }
