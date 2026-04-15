@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Put, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put, UseGuards, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ServidoresService } from './servidores.service';
+import { JwtAuthGuard } from '../autenticacion/jwt-auth.guard';
 
 @Controller('servidores')
 export class ServidoresController {
@@ -15,6 +16,7 @@ export class ServidoresController {
         return this.servidoresService.obtenerServidorPorId(id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post()
     crearServidor(@Body() datos: any) {
         return this.servidoresService.crearServidor(datos);

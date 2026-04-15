@@ -13,12 +13,12 @@ export class Mensaje {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     fecha!: Date;
 
-    @ManyToOne(() => Usuario, {
+    @ManyToOne(() => Usuario, (usuario) => usuario.mensajes, {
         onDelete: 'CASCADE',
     })
     usuario!: Usuario;
 
-    @ManyToOne(() => Canal, {
+    @ManyToOne(() => Canal, (canal) => canal.mensajes, {
         onDelete: 'CASCADE',
     })
     canal!: Canal;

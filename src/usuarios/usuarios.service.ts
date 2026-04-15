@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario } from './entities/usuario.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuariosService {
@@ -25,6 +26,10 @@ export class UsuariosService {
   }
 
   async crearUsuario(datosUsuario: Partial<Usuario>): Promise<Usuario> {
+    if (datosUsuario.password) {
+      datosUsuario.password = await bcrypt.hash(datosUsuario.password, 10);
+    }
+
     const nuevoUsuario = this.usuarioRepository.create(datosUsuario);
     return this.usuarioRepository.save(nuevoUsuario);
   }
@@ -34,6 +39,10 @@ export class UsuariosService {
 
     if (!usuario) {
       throw new NotFoundException(`No se ha encontrado el usuario con id ${id}`);
+    }
+
+    if (datosUsuario.password) {
+      datosUsuario.password = await bcrypt.hash(datosUsuario.password, 10);
     }
 
     const usuarioActualizado = Object.assign(usuario, datosUsuario);
